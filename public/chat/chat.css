@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#chat {
+  display: flex;
+  flex-direction: column;
+  margin: 2vw auto;
+  width: 60vw;
+}
+
+#chat > input {
+  border: 1px solid #ddd;
+  padding: 1em 2em;
+}
+
+.messages {
+  border: 1px solid #ddd;
+  height: 50vh;
+  margin: 2vh 0;
+  padding: 2em;
+}
+
+.message {
+  margin-bottom: 0.7em;
+}
+
+.author {
+  font-weight: bold;
+}

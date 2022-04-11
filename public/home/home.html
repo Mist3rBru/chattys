@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chattys | Select Chat</title>
+    <link rel="stylesheet" href="/home/home.css">
+  </head>
+
+  <body>
+    <form action="/chat/chat.html">
+      <select name="room">
+        <option value="undefined">Select a room</option>
+      </select>
+      <input type="text" name="author" placeholder="Type you user name" required />
+      <button type="submit">Enter</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <script src="/home/home.js"></script>
+  </body>
+</html>
