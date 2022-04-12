@@ -6,12 +6,14 @@ const messageInput = document.querySelector('input[name=message]')
 const messagesField = document.querySelector('.messages')
 
 const renderMessage = (data) => {
-  const { author, text, cratedAt } = data
+  const { author, text, createdAt } = data
+  let now
+  if (createdAt !== now) {}
   messagesField.insertAdjacentHTML(
     'beforeEnd',
     `<div class="message">
           <span class="time">
-            ${new Date(cratedAt).toLocaleTimeString('pt-br', {
+            ${new Date(createdAt).toLocaleTimeString('pt-br', {
               hour: '2-digit',
               minute: '2-digit',
             })}
@@ -39,7 +41,7 @@ document.getElementById('chat').addEventListener('submit', (e) => {
       author,
       room,
       text: messageInput.value,
-      cratedAt: new Date()
+      createdAt: new Date()
     }
     socket.emit('message', messageModel)
   }

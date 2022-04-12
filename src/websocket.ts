@@ -40,5 +40,5 @@ type Message = {
   author: string
   room: string
   text: string
-  cratedAt: Date
+  createdAt: Date
 }
