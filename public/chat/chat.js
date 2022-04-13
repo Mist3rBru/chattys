@@ -1,19 +1,36 @@
 const socket = io()
 const urlSearch = new URLSearchParams(window.location.search)
-const author = urlSearch.get('author')
+const author = urlSearch.get('name')
 const room = urlSearch.get('room')
-const messageInput = document.querySelector('input[name=message]')
 const messagesField = document.querySelector('.messages')
+const usersList = document.querySelector('.users-list')
+const usersCount = document.querySelector('.users-count')
+let lastMessageDay
 
 const renderMessage = (data) => {
   const { author, text, createdAt } = data
-  let now
-  if (createdAt !== now) {}
+  const createdDate = new Date(createdAt)
+  const now = new Date()
+  if (createdDate.getDay() !== lastMessageDay) {
+    lastMessageDay = createdDate.getDay()
+    let date
+    const passedDays = now.getDate() - createdDate.getDate()
+    const passedMonths = now.getMonth() - createdDate.getMonth()
+    if (passedDays <= 7 && passedMonths == 0) {
+      date = createdDate.toLocaleDateString('pt-br', { weekday: 'long' })
+    } else {
+      date = createdDate.toLocaleDateString('pt-br', { dateStyle: 'short' })
+    }
+    messagesField.insertAdjacentHTML(
+      'beforeend',
+      `<div class="message-day-block"><div class="message-day">${date}</div></div>`
+    )
+  }
   messagesField.insertAdjacentHTML(
     'beforeEnd',
     `<div class="message">
           <span class="time">
-            ${new Date(createdAt).toLocaleTimeString('pt-br', {
+            ${createdDate.toLocaleTimeString('pt-br', {
               hour: '2-digit',
               minute: '2-digit',
             })}
@@ -24,9 +41,21 @@ const renderMessage = (data) => {
   )
 }
 
-socket.emit('selectRoom', { author, room })
+const renderUsers = (users) => {
+  usersCount.innerHTML = users.length
+  usersList.innerHTML = ''
+  users.forEach(user => {
+    usersList.insertAdjacentHTML('beforeend',`<div class="user">${user.name}</div>`)
+  })
+}
 
-socket.on('previousMessages', (messages) => {
+socket.emit('selectRoom', { room, name: author })
+
+socket.on('users', (users) => {
+  renderUsers(users)
+})
+
+socket.once('previousMessages', (messages) => {
   messages.forEach((message) => renderMessage(message))
 })
 
@@ -34,16 +63,24 @@ socket.on('message', (message) => {
   renderMessage(message)
 })
 
-document.getElementById('chat').addEventListener('submit', (e) => {
-  e.preventDefault()
-  if (messageInput.value) {
-    const messageModel = {
-      author,
-      room,
-      text: messageInput.value,
-      createdAt: new Date()
-    }
-    socket.emit('message', messageModel)
+document.getElementById('message-input').addEventListener('keypress', (e) => {
+  const message = e.target
+  if (e.key !== 'Enter' || !message.value) return null
+  const messageModel = {
+    author,
+    room,
+    text: message.value,
+    createdAt: new Date(),
   }
-  messageInput.value = ''
+  socket.emit('message', messageModel)
+  message.value = ''
 })
+
+document.getElementById('leave-room').addEventListener('click', () => {
+  socket.emit('leaveRoom', room)
+  window.location = '/'
+})
+
+window.onbeforeunload = () => {
+  socket.emit('leaveRoom', room)
+}

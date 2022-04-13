@@ -4,10 +4,16 @@
   box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  justify-content: space-between;
+  margin: 2vw auto;
+  width: 80vw;
+}
+
 #chat {
   display: flex;
   flex-direction: column;
-  margin: 2vw auto;
   width: 60vw;
 }
 
@@ -21,6 +27,7 @@
   height: 50vh;
   margin: 2vh 0;
   padding: 2em;
+  overflow: auto;
 }
 
 .message {
@@ -29,4 +36,19 @@
 
 .author {
   font-weight: bold;
+}
+
+.message-day-block {
+  font-family: 'Times New Roman', Times, serif, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.message-day {
+  background-color: #ccc;
+  margin: 0 auto;
+  padding: 3px 5px;
+  border-radius: 3px;
 }

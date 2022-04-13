@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="/chat/chat.css">
   </head>
   <body>
-    <form id="chat">
-      <a href="/">Leave</a>
+    <section id="chat">
+      <button id="leave-room">Leave</button>
       <div class="messages"></div>
-      <input type="text" name="message" placeholder="Type your message" />
-    </form>
+      <input id="message-input" type="text" name="message" placeholder="Type your message" />
+    </section>
+    <section id="users">
+      <h2>Online:<span class="users-count"></span></h2>
+      <ul class="users-list"></ul>
+    </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
     <script src="/chat/chat.js"></script>
   </body>
