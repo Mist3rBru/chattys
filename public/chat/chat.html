@@ -5,13 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/chat/chat.css">
   </head>
   <body>
     <section id="chat">
+      <h1 class="room-title">Chat: <span></span></h1>
       <button id="leave-room">Leave</button>
       <div class="messages"></div>
-      <input id="message-input" type="text" name="message" placeholder="Type your message" />
+      <div class="message-container">
+        <input class="message-input" type="text" name="message" placeholder="Type your message" />
+        <button class="message-send" type="submit"><span class="material-icons">send</span></button>
+      </div>
     </section>
     <section id="users">
       <h2>Online:<span class="users-count"></span></h2>

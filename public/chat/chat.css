@@ -17,9 +17,14 @@ body {
   width: 60vw;
 }
 
-#chat > input {
+#chat input {
   border: 1px solid #ddd;
   padding: 1em 2em;
+}
+
+.room-title {
+  text-align: center;
+  margin: 2vh;
 }
 
 .messages {
@@ -38,7 +43,7 @@ body {
   font-weight: bold;
 }
 
-.message-day-block {
+.message-day-container {
   font-family: 'Times New Roman', Times, serif, sans-serif;
   display: flex;
   align-items: center;
@@ -51,4 +56,16 @@ body {
   margin: 0 auto;
   padding: 3px 5px;
   border-radius: 3px;
+}
+
+.message-container {
+  display: flex;
+}
+
+.message-input {
+  width: 100%;
+  }
+
+.message-send {
+  margin-left: 3px;
 }

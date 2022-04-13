@@ -23,7 +23,7 @@ const renderMessage = (data) => {
     }
     messagesField.insertAdjacentHTML(
       'beforeend',
-      `<div class="message-day-block"><div class="message-day">${date}</div></div>`
+      `<div class="message-day-container"><div class="message-day">${date}</div></div>`
     )
   }
   messagesField.insertAdjacentHTML(
@@ -63,24 +63,34 @@ socket.on('message', (message) => {
   renderMessage(message)
 })
 
-document.getElementById('message-input').addEventListener('keypress', (e) => {
-  const message = e.target
-  if (e.key !== 'Enter' || !message.value) return null
-  const messageModel = {
-    author,
-    room,
-    text: message.value,
-    createdAt: new Date(),
-  }
-  socket.emit('message', messageModel)
-  message.value = ''
-})
+document.querySelector('.room-title span').innerHTML = room
 
 document.getElementById('leave-room').addEventListener('click', () => {
   socket.emit('leaveRoom', room)
   window.location = '/'
 })
 
-window.onbeforeunload = () => {
-  socket.emit('leaveRoom', room)
-}
+const messageInput = document.querySelector('.message-input')
+messageInput.addEventListener('keypress', (e) => {
+  if (e.key !== 'Enter' || !messageInput.value) return null
+  const messageModel = {
+    author,
+    room,
+    text: messageInput.value,
+    createdAt: new Date(),
+  }
+  socket.emit('message', messageModel)
+  messageInput.value = ''
+})
+
+document.querySelector('.message-send').addEventListener('click', () => {
+  if (!messageInput.value) return null
+  const messageModel = {
+    author,
+    room,
+    text: messageInput.value,
+    createdAt: new Date(),
+  }
+  socket.emit('message', messageModel)
+  messageInput.value = ''
+})
