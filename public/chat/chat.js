@@ -17,9 +17,9 @@ const renderMessage = (data) => {
     const passedDays = now.getDate() - createdDate.getDate()
     const passedMonths = now.getMonth() - createdDate.getMonth()
     if (passedDays <= 7 && passedMonths == 0) {
-      date = createdDate.toLocaleDateString('pt-br', { weekday: 'long' })
+      date = createdDate.toLocaleDateString('en-us', { weekday: 'long' })
     } else {
-      date = createdDate.toLocaleDateString('pt-br', { dateStyle: 'short' })
+      date = createdDate.toLocaleDateString('en-us', { dateStyle: 'short' })
     }
     messagesField.insertAdjacentHTML(
       'beforeend',
