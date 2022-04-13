@@ -14,8 +14,15 @@
       <button id="leave-room">Leave</button>
       <div class="messages"></div>
       <div class="message-container">
+        <button class="message-img"><span class="material-icons">image</span></button>
         <input class="message-input" type="text" name="message" placeholder="Type your message" />
-        <button class="message-send" type="submit"><span class="material-icons">send</span></button>
+        <form  class="message-img-container hidden" action="/upload/img" method="post" enctype="multipart/form-data">
+          <input id="message-img-input" class="hidden" type="file" name="img">
+          <label class="message-img-preview" for="message-img-input">
+            <img src="/default/img/plus.png" />
+          </label>
+          <button type="submit"><span class="material-icons">send</span></button>
+        </form>
       </div>
     </section>
     <section id="users">
@@ -24,5 +31,6 @@
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
     <script src="/chat/chat.js"></script>
+    <script src="/default/js/forms.js"></script>
   </body>
 </html>

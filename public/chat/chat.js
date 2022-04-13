@@ -7,8 +7,11 @@ const usersList = document.querySelector('.users-list')
 const usersCount = document.querySelector('.users-count')
 let lastMessageDay
 
+localStorage.setItem('name', author)
+localStorage.setItem('room', room)
+
 const renderMessage = (data) => {
-  const { author, text, createdAt } = data
+  const { author, text, img, createdAt } = data
   const createdDate = new Date(createdAt)
   const now = new Date()
   if (createdDate.getDay() !== lastMessageDay) {
@@ -36,7 +39,7 @@ const renderMessage = (data) => {
             })}
           </span>
           <span class="author">${author}:</span>
-          ${text}
+          ${text || `<img class="message-img" src="/img/${img}">`}
         </div>`
   )
 }
@@ -83,14 +86,20 @@ messageInput.addEventListener('keypress', (e) => {
   messageInput.value = ''
 })
 
-document.querySelector('.message-send').addEventListener('click', () => {
-  if (!messageInput.value) return null
-  const messageModel = {
-    author,
-    room,
-    text: messageInput.value,
-    createdAt: new Date(),
+document.querySelector('.message-img').addEventListener('click', () => {
+  document.querySelector('.message-img-container').classList.toggle('hidden')
+})
+
+document.querySelector('input[type=file]').addEventListener('change',(e)=> {
+  var preview = document.querySelector('.message-img-preview img')
+  const input = e.target
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = (e) => {
+      preview.setAttribute('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    preview.setAttribute('src', '/default/img/spinner.gif');
   }
-  socket.emit('message', messageModel)
-  messageInput.value = ''
 })
